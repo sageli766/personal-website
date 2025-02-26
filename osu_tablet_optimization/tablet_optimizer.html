@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Li's Website - osu! Tablet Area Optimizer</title>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    .project-container {
+      display: flex;
+      /*flex-wrap: wrap;*/
+      flex-direction: row;
+      align-items: ;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images {
+      flex: 1 1 40%;
+      padding: 1rem;
+    }
+
+    .project-images img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-text {
+      flex: 1 1 60%;
+      padding: 1rem;
+    }
+
+    .project-section {
+      margin-bottom: 2rem;
+    }
+
+    .project-section h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .project-section p,
+    .project-section ul {
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .project-container {
+        flex-direction: column;
+      }
+    }
+
+    header, footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header nav ul, footer nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    header nav ul li, footer nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a, footer nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <!-- HEADER -->
+    <h1>osu! Tablet Area Optimizer</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="project-container">
+  <!-- IMAGES -->
+  <div class="project-images">
+    <img src="gui.png" alt="gui" />
+    <img src="mapping.png" alt="mapping"/>
+  </div>
+
+  <!-- TEXT -->
+  <div class="project-text">
+    <div class="project-section" id="overview">
+      <h2>Overview</h2>
+      <p>
+        osu! is a free-to-play, online rhythm game developed by Dean "peppy" Herbert, which involved a series of consecutive
+        objects appearing on a playfield. Users must aim a cursor to the object and input an action to successfully "hit"
+        the object. For more information on the specifics see my <a href="../osu_bayesian/osu_bayesian.html"> this project</a>.
+      </p>
+
+      <p>
+        A popular input device that I, and most of the playerbase uses, are graphics drawing tablets. These tablets can detect
+        the position of a handheld pen device and report it the computer, where there is a one-to-one mapping of the tablets'
+        "active area" and position on the user's screen, colloquially known as "tablet area" in the community.
+      </p>
+
+      <p>
+        I have always been a strong proponent of using a tilted mapping, like in the second image, to better suit a human wrist's
+        range of motion. If we assume that most people hold their tablet pens like they would a pencil, notice that the comfortable range
+        of accessible area on the tablet sweeps a solid arc, rather than a straight rectangle. An solid arc shaped area would be interesting
+        to experiment with, but a tilted rectangle preserves the distance metric between tablet area and the screen, which I believe
+        is a worthwhile compromise.
+      </p>
+
+      <p>
+        A downside of using tilted areas is achieving a consistent feeling across play sessions. Naturally, a tablet will be placed
+        in a variety of positions relative to a user's desk over different sessions, which results in an inconsistent feel which
+        can be exacerbated for those used to a tilted area or tablet. This project aims to fix this issue as a method to calibrate
+        tablet area.
+      </p>
+
+      <p>
+        The program parses user replay with an algorithm, and produces a mapping of player hit attempts to hit objects.
+        Next, there are several optimizations methods currently available for calibrating the area. First and most simple, a simple mean hit
+        deviation angles and radial distance are computed, and the program returns the negative of the mean as a suggested adjustment.
+
+        In addition to a simple mean, there is a least-squares fit, using tablet tilt and size as parameters, adjusts the
+        hit attempts given the new tilt and size and minimizes the sum of squared hit errors.
+
+        Finally, I am experimenting with a optimization method I would call "path error." An idealized path is created
+        for some given map, and the user's replay is compared at each time step to the idealized path. A least-squares fit is then
+        conducted with tablet tilt and size again, but minimizing the sum of the squared errors between the user's aiming path
+        and the idealized path.
+
+        Each of the optimization methods have their pros and cons- and the user is free at any time to change and experiment
+        with what feels best for them.
+      </p>
+    </div>
+
+    <div class="project-section" id="features">
+      <h2>Features</h2>
+      <ul>
+        <li>Simple GUI with graphics to operate and visualize effects of calibration in real time</li>
+        <li>Automatic map file path detection through parsing osu!'s proprietary database file</li>
+        <li>Three distinct optimization algorithms to suit a user's preferences</li>
+        <li>Computes analysis of 20+ minute long maps with hundreds of thousands of replay data points in seconds from optimized algorithms</li>
+      </ul>
+    </div>
+
+    <div class="project-section" id="technologies">
+      <h2>Technologies / Skills</h2>
+      <p>
+        Python (numpy, pandas, scikit-learn, matplotlib, tkinter), Data Analysis, Metric Spaces (tablet mappings!), Data Structures and Algorithms.
+      </p>
+    </div>
+
+    <div class="project-section" id="details">
+      <h2>Future Work</h2>
+      <p>
+        There are a few bugs with select maps in the hit detection algorithm that need to be ironed out. The program also only
+        supports a purely keyboard-input only playstyle- while this is the most common playstyle by far, I would like to add
+        support for other playstyles including mouse or pen inputs.
+      </p>
+    </div>
+
+    <a href="../index.html" class="back-to-blog">← Back to Home</a>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Updated 2/20/25</p>
+  </div>
+</footer>
+</body>
+</html>

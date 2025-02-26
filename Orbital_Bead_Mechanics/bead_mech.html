@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Li's Website - Project</title>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    .project-container {
+      display: flex;
+      /*flex-wrap: wrap;*/
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images {
+      flex: 1 1 40%;
+      padding: 1rem;
+    }
+
+    .project-images img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-text {
+      flex: 1 1 60%;
+      padding: 1rem;
+    }
+
+    .project-section {
+      margin-bottom: 2rem;
+    }
+
+    .project-section h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .project-section p,
+    .project-section ul {
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .project-container {
+        flex-direction: column;
+      }
+    }
+
+    header, footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header nav ul, footer nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    header nav ul li, footer nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a, footer nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <!-- HEADER -->
+    <h1>Orbital Bead Mechanics</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="project-container">
+  <!-- IMAGES -->
+  <div class="project-images">
+    <img src="bead_gif.gif" alt="analysis"></img>
+    <img src="setup.png" alt="setup" />
+  </div>
+
+  <!-- TEXT -->
+  <div class="project-text">
+    <div class="project-section" id="overview">
+      <h2>Overview</h2>
+      <p>
+        This group project was one of the first in my undergraduate career, yet it holds a special place as
+        one of the first times I put together all of my skills to investigate and solve a problem.
+      </p>
+
+      <p>
+        Inspired by a textbook problem in a classical mechanics class, our group decided to investigate the mechanics of
+        a bead constrained to motion along a loop. The loop is rotating on the axis of the diameter of the loop.
+        Originally, the problem asked for the equations of motion for the loop rotating with a constant angular velocity.
+        This turns out to have a simple solution, in which the bead is attracted to some equilibrium position on the loop
+        determined by a few factors. However, we wanted to expand and investigate the motion given some arbitrary rotation function.
+      </p>
+
+      <p>
+        We developed a mathematical model for the problem and ran simulations as a sanity check. We then created a loop with
+        a track by laser-cutting pieces from transparent polycarbonate, and placed a colored bead inside. The whole assembly
+        was then rotated by attaching a magnet and using stirring plate typically used in chemistry experiments.
+      </p>
+
+      <p>
+        Slow motion video was taken of the setup, and computer-vision algorithms were used to determine the position of
+        the bead throughout time. We plotted the position over time and compared our results to our theoretical model.
+        For more information, see the writeup <a href="Classical_Mechanics_I_Final_Exam_Project_Report___Coburn__Haber__Li.pdf" target="_blank">here</a>.
+      </p>
+    </div>
+
+    <div class="project-section" id="technologies">
+      <h2>Technologies / Skills</h2>
+      <p>
+        MATLAB, Python (openCV, numpy), Laser Cutting, Analytical Modeling
+      </p>
+    </div>
+
+    <div class="project-section" id="details">
+      <h2>Future Work</h2>
+      <p>
+        A more robust setup with a camera directly attached to the setup for a stable reference frame can helped
+        in analysis of more complicated functions of rotation. A motor with more fine speed control and programmability
+        can also prove very useful.
+      </p>
+    </div>
+    <a href="../index.html" class="back-to-blog">← Back to Home</a>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Updated 2/20/25</p>
+  </div>
+</footer>
+</body>
+</html>

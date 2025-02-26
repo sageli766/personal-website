@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Li's Website - Homelab</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .project-container {
+      display: flex;
+      /*flex-wrap: wrap;*/
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images {
+      flex: 1 1 40%;
+      padding: 1rem;
+    }
+
+    .project-images img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-text {
+      flex: 1 1 60%;
+      padding: 1rem;
+    }
+
+    .project-section {
+      margin-bottom: 2rem;
+    }
+
+    .project-section h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .project-section p,
+    .project-section ul {
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .project-container {
+        flex-direction: column;
+      }
+    }
+
+    header, footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header nav ul, footer nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    header nav ul li, footer nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a, footer nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <h1>Homelab</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="project-container">
+  <!-- IMAGES -->
+  <div class="project-images">
+    <img src="server_rails.jpg" alt="serverrails" />
+    <img src="serverrack.jpg" alt="serverrack" />
+    <img src="trading-vm.png" alt="tradingvm" />
+    <img src="minecraft_VM.png" alt="minecraftvm" />
+  </div>
+
+  <!-- TEXT -->
+  <div class="project-text">
+    <div class="project-section" id="overview">
+      <h2>Overview</h2>
+      <p>
+        I have always been interested in computers for as long as I can remember, and always liked tinkering with old
+        hardware and experimenting with enterprise-style computing; building my first personal PC early in middle school, and
+        a multi-gpu cluster for cryptocurrency mining a little later. More recently however,
+        I have found a passion for networking and self-hosting; it is a good learning experience in emulating how
+        services are delployed in the industry as well as scratches my itch for messing around with computer hardware. It also allows
+        me to offload computational tasks to the server like training ML models, performing large computations with data,
+        or personal projects that need high uptime, such that I can continue using my personal computer in the meantime.
+      </p>
+
+      <p>
+        To organize my recent experiments, I have picked up another skill/hobby along the way; 3d-printing and CAD. Originally
+        inspired by <a href="https://www.printables.com/model/275203-10in-home-server-project/files" target="_blank">this post</a>, it seemed like
+        a neat way to store and access all of my networking hardware in the same location- and to be honest, it just looked really cool
+        to have around my living space. I purchased a solid beginner printer (Bambu Lab a1), and got to work designing
+        a few mounts for my rack components, purchased a few server rails online, and have been slowly adding to the rack.
+      </p>
+
+      <p>
+        I currently have a two compute node cluster running Proxmox Virtual Environment, which has VMs for PiHole,
+        hosting 1 minecraft server for friends, an ubuntu VM for testing trading algorithms, a Windows VM for experimenting with
+        LLMs, as well as a VM hosting this very website
+        (once I get a workaround for getting past my upstream router)!
+        I reused an old Linksys router I had laying around, and a Netgear GS308EP managed switch to manage my LAN.
+      </p>
+    </div>
+
+    <div class="project-section" id="features">
+      <h2>Features</h2>
+      <ul>
+        <li>1x HP EliteDesk 800 G3 Mini (Intel i7-6700T, 24Gb RAM, 512Gb SSD) in a proxmox cluster.</li>
+        <li>1x HP EliteDesk 800 G6 Mini (Intel i7-10700T, Nvidia 1660Ti, 32 Gb RAM, 512Gb SSD) in a proxmox cluster and LLM experiments</li>
+        <li>1x Old Linksys Router (unsure of model number- soon to be upgraded)</li>
+        <li>1x Netgear GS308EP 8 port managed POE+ switch</li>
+        <li>Various 3d-printed components like patch panel, SSD enclosures.</li>
+      </ul>
+    </div>
+
+    <div class="project-section" id="technologies">
+      <h2>Technologies / Keywords</h2>
+      <p>
+        Networking, Cloud Computing, Hypervisors, Distributed Computing, CAD
+      </p>
+    </div>
+
+    <div class="project-section" id="details">
+      <h2>Future Work</h2>
+      <p>
+        I hope to find a few good deals on some storage devices so I can work on creating a NAS server; most likely to be run
+        on the proxmox cluster with SSD passthrough.
+
+        As I am currently living in an apartment complex, I cannot directly host services as network traffic must go through
+        the upstream router in the apartment before reaching me. I am looking into setting up a reverse SSH tunnel at some
+        remote location in order to tunnel traffic into my LAN and allow me to host websites and services for the public.
+
+        With a third compute node added to the Proxmox cluster, I could also experiment with maintaining high uptime in my
+        VMs- if one certain compute node goes offline for some reason, the VM can be transferred to another with a short delay,
+        continuing functionality.
+      </p>
+    </div>
+
+    <a href="../index.html" class="back-to-blog">← Back to Home</a>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Updated 2/20/25</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Li's Website - Project</title>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    .project-container {
+      display: flex;
+      /*flex-wrap: wrap;*/
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images {
+      flex: 1 1 40%;
+      padding: 1rem;
+    }
+
+    .project-images img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-text {
+      flex: 1 1 60%;
+      padding: 1rem;
+    }
+
+    .project-section {
+      margin-bottom: 2rem;
+    }
+
+    .project-section h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .project-section p,
+    .project-section ul {
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .project-container {
+        flex-direction: column;
+      }
+    }
+
+    header, footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header nav ul, footer nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    header nav ul li, footer nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a, footer nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .simulation-container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .canvas-container {
+      margin-right: 20px; /* space between the canvas and settings */
+    }
+
+    .simulation-settings {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 3px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .simulation-settings > div {
+      margin-bottom: 1rem;
+    }
+
+    #canvas {
+      border: 3px solid #333;
+      border-radius: 8px;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <!-- HEADER -->
+    <h1>Project Title</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="project-container">
+  <!-- IMAGES -->
+  <div class="project-images">
+    <img src="chaos.gif" alt="gif"/>
+    <img src="Bifurcation_Diagram.png" alt="sin" />
+    <img src="Bifurcation_triangle.png" alt="triangle" />
+    <div class="project-section" id="simulation">
+      <h2>Interactive Simulation</h2>
+      <p>
+        Here is a simple simulation of the bouncing ball written in JavaScript. Feel free to play around with the frequency
+        and observe the different regimes shown in the bifurcation diagrams.
+      </p>
+      <div class="simulation-container">
+        <div class="canvas-container">
+          <canvas id="canvas" width="200" height="400"></canvas>
+        </div>
+        <div class="simulation-settings">
+          <div>
+            <label for="freqSlider">
+              Oscillation Frequency: <span id="freqValue">1.2</span> Hz
+            </label>
+          </div>
+          <div>
+            <input type="range" id="freqSlider" min="1" max="3" step="0.1" value="1.6">
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="waveType" value="sin" checked> Sinusoidal Floor
+            </label>
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="waveType" value="triangle"> Triangle Floor
+            </label>
+          </div>
+          <div>
+            <button id="resetButton">Reset Simulation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEXT -->
+  <div class="project-text">
+    <div class="project-section" id="overview">
+      <h2>Overview</h2>
+      <p>
+        For a computational physics final project, a friend and I investigated the mechanics of a ball bouncing
+        on an oscillating table. By varying parameters and plotting peak successive peak bounce heights, we can
+        observe period doubling bifurcation. We expanded on the classical example by adding support for different
+        oscillation functions, triangle-shaped for example.
+      </p>
+    </div>
+
+    <div class="project-section" id="methods">
+      <h2>Methods</h2>
+      <p>
+        A ball and table system were simulated in Python, and ball height was tracked in an array. When a ball's future position
+        were to be below the table's position in the next time step, the ball would bounce off with added energy from the table,
+        subtracted by a restitution factor set to 0.8. Since our oscillation functions are well-behaved,
+        evaluating instantaneous velocities was simple.
+      </p>
+
+      <p>
+        We used Euler integration as opposed to Verlet or Runge-Kutta methods to save on runtime; the numerical instability of
+        Euler integration would be exhibited in a gradual accumulation of energy given a perfectly elastic collision.
+        In our case, this effect is countered by the coefficient of restitution, and the runtime improvements of euler integration
+        were worth the slight decrease in accuracy.
+      </p>
+
+      <p>
+        We investigated the effect of table frequency on long-term peak heights. We let the simulation the run for a specified
+        time before tracking peak heights with scipy's peak finding functions to allow the ball to fall into a stable (or chaotic)
+        regime, and heights were plotted against table oscillation frequency, which resulted in clear bifurcation diagrams.
+      </p>
+
+      <p>
+        In the sinusoidally oscillating table case, there were three regimes we identified. First, when the oscillation frequency
+        was low, the table did not impart enough energy into the ball, and tended to "hug" the table. In the median frequency ranges,
+        the ball followed period-doubling bifurcation, with peak heights falling into a stable pattern of heights. Higher frequencies
+        resulted in chaotic behavior. Interestingly, there are some transient structures reminiscent of bifrucation themselves
+        appearing in the 1.55 to 1.6 Hz range.
+      </p>
+
+      <p>
+        In the triangularly oscillating table case, we observed a similar regime in the low Hz range as in the sinusoidal
+        case, though with some apparent transient structure. Above this regime, there are emergent structures of consistent bounce
+        heights, followed by a chaotic regime. As we further increase table oscillation frequency, the pattern seems to repeat
+        itself again; though with less clarity as numerical errors add up presumably.
+      </p>
+
+      <p>
+        For more information, see our video presentation <a href="https://www.youtube.com/watch?v=4XHNCmFjAyE" target="_blank">here</a>.
+      </p>
+    </div>
+
+    <div class="project-section" id="details">
+      <h2>Future Work</h2>
+      <p>
+        To further expand on this project, I would like to explicitly compare the numerical error from euler integration to
+        alternative methods, to determine if my intuition was correct. There are also analytical methods of simulating
+        the ball height and exact collision locations. Additionally, bifurcation diagrams on different parameters other than
+        just table frequency would be interesting to investigate.
+      </p>
+    </div>
+
+    <div class="project-section" id="technologies">
+      <h2>Technologies / Skills</h2>
+      <p>
+        Python (numpy, scipy), Computational Physics, JavaScript
+      </p>
+    </div>
+    <a href="../index.html" class="back-to-blog">← Back to Home</a>
+  </div>
+</main>
+
+<script src="bouncing_table.js"></script>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Updated 2/26/25</p>
+  </div>
+</footer>
+</body>
+</html>

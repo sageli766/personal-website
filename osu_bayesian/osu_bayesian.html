@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Li's Website - osu! Bayesian Hit Error Analysis</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .project-container {
+      display: flex;
+      /*flex-wrap: wrap;*/
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images {
+      flex: 1 1 40%;
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .project-images img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-text {
+      flex: 1 1 60%;
+      padding: 1rem;
+    }
+
+    .project-section {
+      margin-bottom: 2rem;
+    }
+
+    .project-section h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .project-section p,
+    .project-section ul {
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .project-container {
+        flex-direction: column;
+      }
+    }
+
+    header, footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header nav ul, footer nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    header nav ul li, footer nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a, footer nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <h1>osu! Bayesian Hit Error Analysis</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="project-container">
+  <!-- IMAGES -->
+  <div class="project-images">
+    <img src="fig.png" alt="sample_gameplay" />
+    <img src="true_vs_PPD.png" alt="truevsPPD" />
+    <img src="alpha_posteriors.png" alt="posteriors" />
+    <img src="alpha_trace.png" alt="trace plot" />
+  </div>
+
+  <!-- TEXT -->
+  <div class="project-text">
+
+    <div class="project-section" id="overview">
+      <h2>Overview</h2>
+
+      <p>
+        I have played an online rhythm game called osu! quite a long time at this point (I first registered my account
+        in 2014!). Througout the years, I have witnessed much debate on a fair metric to rank map difficuty by- a
+        problem I wish to contribute with this project.
+      </p>
+
+      <p>
+        The gameplay of osu! consists of a series of consecutive “hitcircles” appearing, typically
+        mapped by a “mapper” in sync to a backing track, on a 512 tall by 384 “game-pixel” wide
+        playfield, where the pixel size of a game pixel is adjusted accordingly to a user’s display
+        resolution. A moment before an intended hit on a hitcircle, an outer “approach circle”
+        appears and converges, then subsequently overlaps with the border of the hitcircle, at
+        which time a player is intended to move their cursor over the hitcircle, and “tap” with
+        an input, typically a computer keyboard or mouse click.
+      </p>
+
+
+      <p>
+        Mappers have creative freedom to put objects in various patterns to best represent a back-
+        ing track. Naturally, some patterns are more difficult than others, with some significant
+        considerations being object spacing, the map’s beats per minute (BPM), and the shape
+        of the surrounding hitcircles. A common style of pattern referenced in this study is called
+        a “jump”— a series of consecutive, highly spaced hitcircles which require a high degree
+        of aiming dexterity.
+      </p>
+
+      <p>
+        In this study I identified a few possible parameters on hit error. First would be a player ranking metric
+        created by the developers- performance points. We will assume that this metric generally correlates with player
+        skill. I also consider a combination of the distance between successive hit objects, as well as the time delta
+        between them, and parametrize them together as an "aim speed" measure.
+      </p>
+
+      <p>
+        I modified my <a href="../osu_tablet_optimization/tablet_optimizer.html" style="text-decoration: none">tablet optimization application</a>
+        to export data of various selected replays from various players, additionally keeping track of each player's ID
+        and the map ID to keep track of any problematic data points.
+      </p>
+
+      <p>
+        With these two parameters, as well as a player specific intercept term,
+        I constructed a bayesian hierarchical model assuming a gamma-distributed prior (see reference 1),
+        and used Markov Chain Monte Carlo (MCMC) to sample and produce predictive posterior distributions,
+        which you can see some figures of on the left. For more information on the model, please read the full
+        <a style="text-decoration: none" href="osu__Bayesian_Hit_Error_Analysis.pdf", target="_blank">writeup</a>.
+      </p>
+    </div>
+
+    <div class="project-section" id="technologies">
+      <h2>Technologies/Keywords</h2>
+      <p>
+        Python (numpy, pandas), Bayesian Statistics, Markov Chain Monte Carlo (MCMC) techniques, Analytical Modeling.
+      </p>
+    </div>
+
+    <div class="project-section" id="references">
+      <h2>References</h2>
+      <p>
+        Benjamin Thirey, Randal Hickman. Distribution of euclidean distances between randomly
+        distributed gaussian points in n-space. https://arxiv.org/abs/1508.02238.
+      </p>
+    </div>
+    <a href="../index.html" class="back-to-blog">← Back to Home</a>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Updated 2/20/25</p>
+  </div>
+</footer>
+</body>
+</html>
