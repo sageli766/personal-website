@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Li's Website - GR Ray Tracing</title>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    .project-container {
+      display: flex;
+      /*flex-wrap: wrap;*/
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images {
+      flex: 1 1 40%;
+      padding: 1rem;
+    }
+
+    .project-images img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-images > div {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-images > div img {
+      width: 50%;
+      height: auto;
+    }
+
+    .project-text {
+      flex: 1 1 60%;
+      padding: 1rem;
+    }
+
+    .project-section {
+      margin-bottom: 2rem;
+    }
+
+    .project-section h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .project-section p,
+    .project-section ul {
+      font-family: Arial, sans-serif;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .project-container {
+        flex-direction: column;
+      }
+    }
+
+    header, footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    header nav ul, footer nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    header nav ul li, footer nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a, footer nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <!-- HEADER -->
+    <h1>General Relativity Ray Tracing</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="project-container">
+  <!-- IMAGES -->
+  <div class="project-images">
+    <div>
+      <img src="horizontal_bars_5px_by_100px.png" alt="bars" />
+      <img src="bars.png" alt="bars2" />
+    </div>
+    <img src="milkyway_ref.png" alt="milikyway" />
+    <img src="cuda_bars.png" alt="milkyway2" />
+    <img src="helix_nebula.png" alt="helix"/>
+  </div>
+
+  <!-- TEXT -->
+  <div class="project-text">
+    <div class="project-section" id="overview">
+      <h2>Overview</h2>
+      <p>
+        I created a general relativity ray tracer to visualize black holes.
+
+
+        I impose the null condition to
+        derive the lightlike geodesics given the Schwarzschild metric to derive first-order equations of motion.
+        The path is then integrated using a fourth-order Runge-Kutta numerical integration to determine the color
+        of each pixel on the camera plane. I also added support for CUDA acceleration to cut down runtime from over
+        50 minutes for the example picture attached on a CPU, to just 10 seconds with a GPU with the same image.
+        Currently, there is support for an orthographic, plane-parallel camera with a black hole placed between an
+        image and the camera plane.
+      </p>
+
+      <p>
+        An observing plane is placed parallel to an image plane, and rays are shot out from each pixel perpendicularly from
+        the observing plane toward the image plane. When a ray intersects with the image plane, the color is mapped to the
+        location on the observation plane. This gives us a plane-parallel orthographic camera projection.
+        There is a black hole placed in between the planes, and the black hole's influence on each ray is numerically calculated.
+      </p>
+
+      <p>
+        Starting from the schwarzschild metric, we find the Laplacian to derive the first-order the equations of motion
+        for a lightlike geodesic. I took advantage of the symmetry of the metric to solve for the equations of motion in
+        polar, 2-d coordinates initially. Since a vector in 3-d space can be projected into an equatorial plane of the black hole,
+        the 2-d polar solution is sufficient with a few transformations.
+      </p>
+
+      <p>
+        Fourth-order Runge-Kutta numerical integration is used to integrate the first-order equations, with added support
+        for GPU acceleration with a CUDA kernel, written with the Numba library. Using a GPU accelerates rendering by
+        a factor of over 300, allowing for higher-resolution images to be rendered quickly.
+
+        Some example images and their corresponding reference background images are shown to the left.
+      </p>
+    </div>
+
+    <div class="project-section" id="features">
+      <h2>Features</h2>
+      <ul>
+        <li>Simulation of a Schwarzschild black hole on a background image</li>
+        <li>GPU acceleration through CUDA</li>
+      </ul>
+    </div>
+
+    <div class="project-section" id="technologies">
+      <h2>Technologies / Skills</h2>
+      <p>
+        Python (Numpy, Pandas, Numba, Matplotlib), CUDA, Computational Physics
+      </p>
+    </div>
+
+    <div class="project-section" id="details">
+      <h2>Future Work</h2>
+      <p>
+        Future work will be to visualize null geodesics in metrics given by other solutions to Einstein's equations,
+        like the Kerr metric of a spinning black hole. Additionally, I want to implement other camera projections to
+        offer different perspectives of the black hole, as well as add functionality to create animations. A long term
+        goal will be to optimize the algorithm enough to render frames in realtime.
+      </p>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Updated 2/20/25</p>
+  </div>
+</footer>
+</body>
+</html>
