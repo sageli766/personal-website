@@ -111,7 +111,7 @@
 <main class="project-container">
   <!-- IMAGES -->
   <div class="project-images">
-    <img src="trajectory.png" />
+    <img src="trajectory.png" alt="trajectory"/>
     <div>
       <img src="horizontal_bars_5px_by_100px.png" alt="bars" />
       <img src="bars.png" alt="bars2" />
@@ -126,38 +126,37 @@
     <div class="project-section" id="overview">
       <h2>Overview</h2>
       <p>
-        I created a general relativity ray tracer to visualize black holes.
+        General relativity has always been a big interest of mine ever since I took an introductory class in my physics
+        degree; I find it fascinating that a change perspective, looking at gravity as curvature of space-time rather
+        than a force leads to many interesting phenomena. Unfortunately, we live in a three-dimensional world and the
+        four-dimensional aspect of spacetime is often hard to visualize; thus I created a general relativity ray tracer
+        to help visualize and bring some intuition behind
+      </p>
 
-
-        I impose the null condition to
-        derive the lightlike geodesics given the Schwarzschild metric to derive first-order equations of motion.
-        The path is then integrated using a fourth-order Runge-Kutta numerical integration to determine the color
-        of each pixel on the camera plane. I also added support for CUDA acceleration to cut down runtime from over
-        50 minutes for the example picture attached on a CPU, to just 10 seconds with a GPU with the same image.
-        Currently, there is support for an orthographic, plane-parallel camera with a black hole placed between an
-        image and the camera plane.
+      <p>
+        First, I look at a 2D state space to utilize the symmetries of the Schwarzschild metric, which simplifies
+        the derivations.
+        I impose the null condition on the Schwarzschild metric to derive the lightlike geodesics and
+        their first-order equations of motion via the Euler-Lagrange equation, parametrized by an affine parameter based on the constants in the system
+        (the Schwarzschild metric is time-independent and symmetric to a polar angle -> energy and angular momentum are conserved via Noether's theorem).
+        Each ray in the original 3D space can be expressed in the 2D state space through a constructed orthogonal basis, integrated,
+        and then a change of basis is conducted to revert to the original 3d cartesian space.
       </p>
 
       <p>
         An observing plane is placed parallel to an image plane, and rays are shot out from each pixel perpendicularly from
         the observing plane toward the image plane. When a ray intersects with the image plane, the color is mapped to the
         location on the observation plane. This gives us a plane-parallel orthographic camera projection.
-        There is a black hole placed in between the planes, and the black hole's influence on each ray is numerically calculated.
+        There is a black hole placed in between the planes, giving rise to the curvature described by the Schwarzschild metric.
+        I use a fourth-order Runge-Kutta integrator to numerically determine the path of the null geodesic along each pixel,
+        and track its path throughout space.
       </p>
 
       <p>
-        Starting from the schwarzschild metric, we find the Laplacian to derive the first-order the equations of motion
-        for a lightlike geodesic. I took advantage of the symmetry of the metric to solve for the equations of motion in
-        polar, 2-d coordinates initially. Since a vector in 3-d space can be projected into an equatorial plane of the black hole,
-        the 2-d polar solution is sufficient with a few transformations.
-      </p>
-
-      <p>
-        Fourth-order Runge-Kutta numerical integration is used to integrate the first-order equations, with added support
-        for GPU acceleration with a CUDA kernel, written with the Numba library. Using a GPU accelerates rendering by
-        a factor of over 300, allowing for higher-resolution images to be rendered quickly.
-
-        Some example images and their corresponding reference background images are shown to the left.
+        Initially, the ray tracing was done completely on my CPU, but this took upwards of 50 minutes for an 800,000 pixel
+        large image. I added GPU acceleration via the python numba library, converting my ray tracing code into a CUDA
+        compatible kernel, and having the computation parallelized by each individual ray. These optimizations cut down my
+        runtime to just about 10 seconds for the same image.
       </p>
     </div>
 
