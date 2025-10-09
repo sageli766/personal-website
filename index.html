@@ -54,6 +54,32 @@
     </div>
 </section>
 
+<!-- Blog -->
+<section id="blog">
+    <h2>Blog</h2>
+
+    <!-- Scrollable wrapper showing two posts at a time -->
+    <div class="container blog-scroll">
+        <div class="blog-post">
+            <h3>The spectral theorem and scientific computing</h3>
+            <p>In this post, I talk about some of the applications of the spectral theorem with regards to scientific computing.</p>
+            <a href="blog_posts/spectral/spectral.html">Read More</a>
+        </div>
+
+        <div class="blog-post">
+            <h3>A small update</h3>
+            <p>A series of small updates for October 2025.</p>
+            <a href="blog_posts/oct_updates.html">Read More</a>
+        </div>
+
+        <div class="blog-post">
+            <h3>Website Release!</h3>
+            <p>I am publishing my website as of February 26, 2025!</p>
+            <a href="blog_posts/release.html">Read More</a>
+        </div>
+    </div>
+</section>
+
 <!-- Portfolio -->
 <section id="portfolio">
     <div class="container">
@@ -156,26 +182,6 @@
 </section>
 
 
-<!-- Blog -->
-<section id="blog">
-    <div class="container">
-        <h2>Blog</h2>
-        <div class="blog-post">
-            <h3>A small update</h3>
-            <p>A series of small updates for October 2025</p>
-            <a href="blog_posts/oct_updates.html">Read More</a>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="blog-post">
-            <h3>Website Release!</h3>
-            <p>I am publishing my website as of February 26, 2025!</p>
-            <a href="blog_posts/release.html">Read More</a>
-        </div>
-    </div>
-</section>
-
 <!-- Contact -->
 <section id="contact">
     <div class="container">
@@ -200,3 +206,37 @@
         </ul>
     </div>
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const blogScroll = document.querySelector('#blog .blog-scroll');
+    if (!blogScroll) {
+        return;
+    }
+
+    const posts = blogScroll.querySelectorAll('.blog-post');
+    if (!posts.length) {
+        return;
+    }
+
+    const visiblePosts = Array.from(posts).slice(0, 2);
+    let totalHeight = 0;
+
+    visiblePosts.forEach((post, index) => {
+        totalHeight += post.getBoundingClientRect().height;
+        if (index === 0 && visiblePosts.length > 1) {
+            const computedStyles = window.getComputedStyle(post);
+            const gap = parseFloat(computedStyles.marginBottom) || 0;
+            totalHeight += gap;
+        }
+    });
+
+    if (totalHeight > 0) {
+        const maxHeight = Math.ceil(totalHeight);
+        blogScroll.style.setProperty('--blog-max-height', `${maxHeight}px`);
+        blogScroll.style.maxHeight = `${maxHeight}px`;
+    }
+});
+</script>
+
+</body>
+</html>

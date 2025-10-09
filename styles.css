@@ -107,13 +107,18 @@ section h1{
     border-radius: 5px;
 }
 
-/* Specific image sizing for Mahalanobis plot */
-.blog-post img[src$="mahalanobis_one_plot.png"] {
+/* Spectral blog figures: shared sizing + framed appearance */
+.blog-post img.spectral-figure {
     width: 50%;
     max-width: 100%;
     height: auto;
     display: block;
-    margin: 1rem auto;
+    margin: 1.5rem auto;
+    padding: 0.75rem;
+    border: 1px solid #d0d0d0;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 /* Blog list shows 2 posts tall and scrolls for more */
